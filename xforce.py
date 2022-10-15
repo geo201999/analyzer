@@ -1,19 +1,21 @@
 import requests
 from requests.auth import HTTPBasicAuth
 from ipaddress import ip_address
+import json
 
+def ipCheck(api_keys):
 
-def ipCheck():
         ### X-Force ApiKey ###
-        apiKey= 'a1f4c674-534f-49f9-b9b3-f54192e840d1'
-        password= 'd5bf87b8-3fa3-4282-a0c6-400cf6d67fd3'
+        apiKey= api_keys ['X-forcekey']
+        password= api_keys['xforcepassw']
 
         ###Virus Total Headers###
-        headers = {"accept": "application/json", "x-apikey": "e0f6e71ffffcb629f728ead19aa68751f0def592f76265c72f41f6da2b28d49a"}
+        headers = api_keys['vtotal']
 
         ### Fraud guard ###
-        key= '9FCLGakf8PxkishQ'
-        fpassword= 'TDTAsifOn2iS5fI3'
+        key= api_keys['key']
+        fpassword= api_keys['fpassword']
+        
 
         listPrivateIps = []
         a_file = open("IPs.txt", "r")
@@ -69,7 +71,7 @@ def ipCheck():
                                 print ('For Further Info Check : ' + "https://fraudguard.io/?ip="+list_of_lists[i])                                        
                                 print('\n')
                         else:
-                                print("Failed for IP "+ list_of_lists[x]) 
+                                print("Failed for IP "+ list_of_lists[i]) 
                         
                         response = requests.get("https://www.virustotal.com/api/v3/ip_addresses/"+list_of_lists[i], headers=headers)
                         if response.status_code == 200:
@@ -85,9 +87,7 @@ def ipCheck():
 
                                 print('Whois : ')
                                 print(vinfo['data']['attributes']['whois'])
-                                print ('For Further Info Check : ' + "https://www.virustotal.com/gui/ip-address/"+list_of_lists[i])                                        
-
-
+                                print ('For Further Info Check : ' + "https://www.virustotal.com/gui/ip-address/"+list_of_lists[i])
 
                                 print('\n')
                         else:
@@ -111,8 +111,12 @@ def ipCheck():
                         print (' ')
 
                                 
-
-
+def keyReturn():
+        secrets_filename = 'keys.json'
+        api_keys = {}
+        with open(secrets_filename, 'r') as f:
+                api_keys = json.loads(f.read())
+                return api_keys
                        
                                 
 def IPAddress(IP: str) -> str:
@@ -131,8 +135,10 @@ def IPAddress(IP: str) -> str:
                 return "Private" 
 
 if __name__ == '__main__' :
+        
 
-        ipCheck()
+        data=keyReturn()
+        ipCheck(data)
     
 
     
