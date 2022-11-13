@@ -1,0 +1,12 @@
+{
+    "X-forcekey":"Put your X-Force key",
+    "xforcepassw":"Put your X-Force password",
+    "key":"Fraud Guard Key",
+    "fpassword":"Fraud Guard password",
+    "vtotal":{
+       "accept":"application/json",
+       "x-apikey":"Put your Virustotal Key"
+    },
+    "alien-key":"Put your Alien vault key ",
+    "cve-key":"Put your nist key"
+ }
